@@ -38,6 +38,11 @@ export default class RNPickerSelect extends PureComponent {
         onUpArrow: PropTypes.func,
         onDownArrow: PropTypes.func,
         onClose: PropTypes.func,
+        modalAccessibilityLabels: PropTypes.shape({
+            close: PropTypes.string,
+            upArrow: PropTypes.string,
+            downArrow: PropTypes.string,
+        }),
 
         // Modal props (iOS only)
         modalProps: PropTypes.shape({}),
@@ -78,6 +83,11 @@ export default class RNPickerSelect extends PureComponent {
         onDownArrow: null,
         onOpen: null,
         onClose: null,
+        modalAccessibilityLabels: {
+            close: 'Close',
+            upArrow: 'Previous item',
+            downArrow: 'Next item',
+        },
         modalProps: {},
         textInputProps: {},
         pickerProps: {},
@@ -282,6 +292,7 @@ export default class RNPickerSelect extends PureComponent {
             onDownArrow,
             onDonePress,
             style,
+            modalAccessibilityLabels,
             touchableDoneProps,
         } = this.props;
 
@@ -298,7 +309,10 @@ export default class RNPickerSelect extends PureComponent {
             >
                 <View style={[defaultStyles.chevronContainer, style.chevronContainer]}>
                     <TouchableOpacity
+                        accessibilityLabel={modalAccessibilityLabels.upArrow}
                         activeOpacity={onUpArrow ? 0.5 : 1}
+                        accessibilityRole="button"
+                        disabled={!onUpArrow}
                         onPress={onUpArrow ? this.onUpArrow : null}
                     >
                         <View
@@ -312,7 +326,10 @@ export default class RNPickerSelect extends PureComponent {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
+                        accessibilityLabel={modalAccessibilityLabels.downArrow}
                         activeOpacity={onDownArrow ? 0.5 : 1}
+                        accessibilityRole="button"
+                        disabled={!onDownArrow}
                         onPress={onDownArrow ? this.onDownArrow : null}
                     >
                         <View
@@ -330,6 +347,7 @@ export default class RNPickerSelect extends PureComponent {
                 </View>
                 <TouchableOpacity
                     testID="done_button"
+                    accessibilityRole="button"
                     onPress={() => {
                         this.togglePicker(true, onDonePress);
                     }}
@@ -413,7 +431,13 @@ export default class RNPickerSelect extends PureComponent {
     }
 
     renderIOS() {
-        const { style, modalProps, pickerProps, touchableWrapperProps } = this.props;
+        const {
+            style,
+            modalProps,
+            pickerProps,
+            touchableWrapperProps,
+            modalAccessibilityLabels,
+        } = this.props;
         const { animationType, orientation, selectedItem, showPicker } = this.state;
 
         return (
@@ -438,7 +462,9 @@ export default class RNPickerSelect extends PureComponent {
                     {...modalProps}
                 >
                     <TouchableOpacity
+                        accessibilityLabel={modalAccessibilityLabels.close}
                         style={[defaultStyles.modalViewTop, style.modalViewTop]}
+                        accessibilityRole="button"
                         testID="ios_modal_top"
                         onPress={() => {
                             this.togglePicker(true);
