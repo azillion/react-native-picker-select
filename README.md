@@ -84,6 +84,7 @@ export const Dropdown = () => {
 | `onClose`<br>_iOS only_                         | Callback triggered right before the closing of the picker                                                                                                                                                                                                                                                                                                                                                                                                                                               | function                 |
 | `modalProps`<br>_iOS only_                      | Additional props to pass to the Modal (some props are used in core functionality so use this carefully)                                                                                                                                                                                                                                                                                                                                                                                                 | object                   |
 | `touchableDoneProps`<br>_iOS only_              | Additional props to pass to the Done touchable (some props are used in core functionality so use this carefully)                                                                                                                                                                                                                                                                                                                                                                                        | object                   |
+| `modalAccessibilityLabels`<br>_iOS only_        | Accessibility labels to be added to the picker controls (chevrons and touchable opacity overlay to close). Available entries include `close, upArrow, downArrow`                                                                                                                                                                                                                                                                                                                                        | object                   |
 
 ### Styling
 
@@ -117,6 +118,7 @@ All properties mentioned below must be nested under the `style` prop. Examples o
 If you need to add accessibility props to the rendered component, you may use `pickerProps` and `touchableWrapperProps` to pass these through.
 
 `pickerProps` accepts an object of props that get passed directly to the native `<Picker />` component.
+`modalAccessibilityLabels` is used to add accessibility labels to the picker controls including the up/down chevron and touchable modal overlay.
 `touchableWrapperProps` also accepts an object of props, but this gets passed to a `<TouchableOpacity />` that toggles the visibility of the picker.<sup>\*note: `touchableWrapperProps` is not supported on web or when `useNativeAndroidPickerStyle={true}`</sup>
 
 ### Accessibility Example
